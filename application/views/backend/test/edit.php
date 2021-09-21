@@ -9,24 +9,31 @@
             </div>
             <div class="card-body">
                <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-md-6">
                      <div class="form-group">
                         <label for="category_name"><?=$page_title;?> Name</label>
                         <input type="text" name="title" autocomplete="off" required class="form-control" id="" placeholder="Enter here..." value="<?php echo $res[0]['title'];?>"> 
                         <input type="hidden" name="id" value="<?php echo $res[0]['id'];?>">
                      </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-6">
                      <div class="form-group">
                         <label for="category_name"><?=$page_title;?> Price</label>
-                        <input type="text" name="price" autocomplete="off" required class="form-control" id="" placeholder="Enter here..." value="<?php echo $res[0]['price'];?>"> 
+                        <input type="text" name="price" autocomplete="off"  class="form-control" id="" placeholder="Enter here..." value="<?php echo $res[0]['price'];?>"> 
                         <input type="hidden" name="id" value="<?php echo $res[0]['id'];?>">
                      </div>
                   </div>
-                 <div class="col-md-4">
+                 <div class="col-md-6">
                      <div class="form-group">
                         <label for="category_name">Normal</label>
-                        <input type="text" name="normal" autocomplete="off" required class="form-control" id="" placeholder="Enter here..." value="<?php echo $res[0]['normal'];?>"> 
+                        <input type="text" name="normal" autocomplete="off"  class="form-control" id="" placeholder="Enter here..." value="<?php echo $res[0]['normal'];?>"> 
+                        <input type="hidden" name="id" value="<?php echo $res[0]['id'];?>">
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <label for="category_name">Unit</label>
+                        <input type="text" name="unit" autocomplete="off"  class="form-control" id="" placeholder="Enter here..." value="<?php echo $res[0]['unit'];?>"> 
                         <input type="hidden" name="id" value="<?php echo $res[0]['id'];?>">
                      </div>
                   </div>

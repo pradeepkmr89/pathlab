@@ -75,6 +75,30 @@
     $(document).ready(function() {
     $('.js-example-basic-multiple').select2();
 });
+
+    $('#testgroupid').on('change', function () {
+       $('#showres tbody').empty();
+        var siteurl = window.location.origin + '/pathlab';
+        var grpid = $(this).val();
+         $.ajax({
+          url: siteurl + "/admin/report/gettest",
+          type: "POST",
+          async: false,
+           dataType: 'json',
+          data: {
+            grpid: grpid, 
+           },
+          success: function (data) {
+
+          for (var i=0; i<data.length; i++) {
+            var row = $('<tr><td>' + data[i].title+ '</td><td><input type="hidden" name="testname[]" class="form-control"  value="' + data[i].title + '"> <input type="hidden" name="testid[]" class="form-control" value="' + data[i].id + '"> <input type="text" name="result[]" class="form-control"></td><td>' + data[i].normal + '</td><td>' + data[i].unit + '</td></tr>');
+            $('#showres').append(row);
+        }
+
+        }
+     });
+  });
+
 </script>
 
 </body>

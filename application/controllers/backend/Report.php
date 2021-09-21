@@ -15,78 +15,61 @@ class Report extends Admin_Controller
 		$this->data['heading'] = "Report"; 
 		$this->data['data'] = $this->db->query("select * from test_group")->result();  
 		$this->render_template('/backend/report/report', $this->data);
-	}
-	public function list() {
+	}     
+	public function gettest() {
+			
+			$id = $this->input->post('grpid');
+			$test = $this->db->query("select * from test_group where id='$id'")->result();
 
-		$user_id = $this->session->userdata('id');
-		$is_admin = ($user_id == 1) ? true:false;
-		$this->data['is_admin'] = $is_admin;
-		$this->data['heading'] = "Test Listing"; 
-		$this->data['data'] = $this->db->query("select * from test_details")->result();  
-		$this->render_template('/backend/test/list', $this->data);
+			$testarr = explode(',',$test[0]->test_id);
+			foreach($testarr as $val){
+ 				$testRes = $this->db->query("select * from test_details where id='$val'")->result();
+ 				foreach($testRes as $vval){
+ 					$temp = array(
+ 						'id'=>$vval->id,
+ 						'title'=>$vval->title,
+ 						'normal'=>$vval->normal,
+ 						'unit'=>$vval->unit,
 
-	}
-	
-	public function create() {
-		$user_id = $this->session->userdata('id');
-		$is_admin = ($user_id == 1) ? true : false;
-		$this->data['is_admin'] = $is_admin;
-		$this->data['heading'] = "Add Test Name"; 
-		$this->render_template('/backend/test/create', $this->data);
+ 				);
+ 				}
+ 				$data[]= $temp;
+			}
+			echo  json_encode($data);
 		}
 
-	public function save() {   
- 
-			$_POST['created_at'] = date('Y-m-d');
- 
-		    $res = $this->db->insert('test_details',$_POST);  
-		    if($res ){
-			$this->session->set_flashdata('success_message', ' Added Successfully!');
-			redirect("admin/test/create");
-		}else{
-			$this->session->set_flashdata('error_message', 'Something went wrong');
-			redirect("admin/test/create");
+		public function save(){
+		 //print_r($_POST);
+			foreach($_POST['testname'] as $key=>$val){ 
+
+ 				 $collect[$key] = array( 
+	 											 'name' => $val,
+										        'id' => $_POST['testid'][$key],
+										        'result' => $_POST['result'][$key]
+										    );
+
+			}
+			$temp["data"]=$collect;
+ 			$jsondata =  json_encode($temp);
+
+ 			$data = array(
+		        'pname' => $_POST['pname'],
+		        'paddress' => $_POST['paddress'],
+		        'page' => $_POST['page'],
+		        'pgender' => $_POST['pgender'],
+		        'doctername' => $_POST['doctername'],
+		        'rdate' => $_POST['rdate'],
+	 	        'json_data' => $jsondata
+			);
+
+			$this->db->insert('reports', $data);
+			$insid = $this->db->insert_id();
+			  redirect('/admin/reports/print/'.$insid,'refresh');
  		}
-		}
-	public function edit($id) {
-			
-		$user_id = $this->session->userdata('id');
-		$is_admin = ($user_id == 1) ? true:false;
-		$this->data['is_admin'] = $is_admin;
-		$this->data['heading'] = "Edit Test "; 
-		$this->data['res'] =  $this->db->get_where('test_details', array('id' => $id))->result_array();
- 
-		$this->render_template('/backend/test/edit', $this->data);
+ 		public function print($id){
 
-		}
-	public function update() {
-
-		$id = $this->input->post('id');
- 		$res =  $this->db->get_where('test_details', array('id' => $id))->result_array(); 
- 
-		$Arr = array(
-						'title'=>$this->input->post('title'),
-						'price'=>$this->input->post('price'),
-  						'description'=>$this->input->post('description'), 
-  			); 
-
-		$this->db->where('id', $id); 
-		$res = $this->db->update('test_details', $Arr);
-
-		 if($res ){
-			$this->session->set_flashdata('success_message', ' Added Successfully!');
-			redirect("admin/test/list");
-		}else{
-			$this->session->set_flashdata('error_message', 'Something went wrong');
-			redirect("admin/test/list");
+ 			$res = $this->db->query("select * from reports where id='$id'")->result();
+  			$this->load->view('/backend/report/print_report',$res);
  		}
-
- 
-
-			
-		}
-	public function delete() {
-			
-		}
 
 	}

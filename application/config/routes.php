@@ -18,6 +18,7 @@ $route['admin/category/(:any)'] = 'backend/category/$1';
  
 
  $route['admin/report/(:any)'] = 'backend/report/$1'; 
+ $route['admin/report/print/(:any)'] = 'backend/report/print/$1'; 
  $route['admin/banner/edit/(:any)'] = 'backend/banner/edit/$1'; 
 
 $route['admin/setting/(:any)'] = 'backend/settings/$1'; 

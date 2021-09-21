@@ -56,7 +56,7 @@
           <li class="nav-item pcoded-hasmenu">
               <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Report</span></a>
               <ul class="pcoded-submenu">
-                  <li><a href="<?php echo base_url('admin/report');?>">Report</a></li>
+                  <li><a href="<?php echo base_url('admin/report/index');?>">Report</a></li>
                 
               </ul>
           </li>

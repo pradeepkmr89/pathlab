@@ -19,6 +19,10 @@ $(document).ready(function () {
     $('#slug').val(createslug($(this).val()));
   });
 
+
+
+
+
   $('#editpage_title').on('focusout', function () {
     var slugold = $('#editslug').val();
     var slugArr = slugold.split('/');
@@ -252,9 +256,7 @@ setTimeout(function() {
 
           }  
     });
- 
 
-});
 
 var createslug = function (str) {
   var $slug = '';
