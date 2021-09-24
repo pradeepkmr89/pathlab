@@ -59,17 +59,18 @@ class Report extends Admin_Controller
 		        'pgender' => $_POST['pgender'],
 		        'doctername' => $_POST['doctername'],
 		        'rdate' => $_POST['rdate'],
+		        'testgroup' => $_POST['testgroup'],
 	 	        'json_data' => $jsondata
 			);
 
 			$this->db->insert('reports', $data);
 			$insid = $this->db->insert_id();
-			  redirect('/admin/reports/print/'.$insid,'refresh');
+			  redirect('/admin/report/print/'.$insid,'refresh');
  		}
- 		public function print($id){
+ 		public function print($id){ 
+ 			$data['res'] = $this->db->query("select * from reports where id='$id'")->result();
 
- 			$res = $this->db->query("select * from reports where id='$id'")->result();
-  			$this->load->view('/backend/report/print_report',$res);
+  			$this->load->view('/backend/report/print_report',$data);
  		}
 
 	}
